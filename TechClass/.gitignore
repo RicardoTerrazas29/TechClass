@@ -1,4 +1,4 @@
-HELP.md
+# Ignorar archivos y directorios comunes de construcción
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -31,3 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
+

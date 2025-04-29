@@ -29,44 +29,8 @@ administrador
 
 
 
-estudiante:
-[
-  {
-    "name": "Rodrigo Goes",
-    "dni": "78965412",
-    "address": "Av. Tecnológica",
-    "mail": "rodrigo@gmail.com",
-    "clave": "1234"
-  },
-  {
-    "name": "Camila Soto",
-    "dni": "65478912",
-    "address": "Calle 5 Sur",
-    "mail": "camila.soto@gmail.com",
-    "clave": "camila2024"
-  },
-  {
-    "name": "Luis Peña",
-    "dni": "12345678",
-    "address": "Av. Principal 123",
-    "mail": "luis.pena@gmail.com",
-    "clave": "luisclave"
-  },
-  {
-    "name": "Andrea Ruiz",
-    "dni": "87654321",
-    "address": "Pasaje Las Flores",
-    "mail": "andrea.ruiz@mail.com",
-    "clave": "andrea123"
-  },
-  {
-    "name": "Sebastian Méndez",
-    "dni": "45678901",
-    "address": "Jr. Los Olivos",
-    "mail": "sebastian.m@gmail.com",
-    "clave": "seb2025"
-  }
-]
+
+
 
 
 
@@ -101,5 +65,52 @@ profesor:
     "phone": 934567890,
     "mail": "miguel.angel@uni.edu",
     "clave": "miguel2025"
+  }
+]
+
+
+
+
+estudiante:
+[
+  {
+    "name": "Rodrigo Goes",
+    "dni": "78965412",
+    "genero": "masculino",
+    "address": "Av. Tecnológica",
+    "mail": "rodrigo@gmail.com",
+    "clave": "1234"
+  },
+  {
+    "name": "Camila Soto",
+    "dni": "65478912",
+    "genero": "femenino",
+    "address": "Calle 5 Sur",
+    "mail": "camila.soto@gmail.com",
+    "clave": "camila2024"
+  },
+  {
+    "name": "Luis Peña",
+    "dni": "12345678",
+    "genero": "masculino",
+    "address": "Av. Principal 123",
+    "mail": "luis.pena@gmail.com",
+    "clave": "luisclave"
+  },
+  {
+    "name": "Andrea Ruiz",
+    "dni": "87654321",
+    "genero": "femenino",
+    "address": "Pasaje Las Flores",
+    "mail": "andrea.ruiz@mail.com",
+    "clave": "andrea123"
+  },
+  {
+    "name": "Sebastian Méndez",
+    "dni": "45678901",
+    "genero": "masculino",
+    "address": "Jr. Los Olivos",
+    "mail": "sebastian.m@gmail.com",
+    "clave": "seb2025"
   }
 ]

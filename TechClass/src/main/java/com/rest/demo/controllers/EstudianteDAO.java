@@ -72,6 +72,7 @@ public class EstudianteDAO {
 			Estudiante e = existingestudiante.get();
 			e.setName(estudiante.getName());
 			e.setDni(estudiante.getDni());
+			e.setGenero(estudiante.getGenero());
 			e.setAddress(estudiante.getAddress());
 			e.setMail(estudiante.getMail());
 			e.setClave(passwordEncoder.encode(estudiante.getClave()));

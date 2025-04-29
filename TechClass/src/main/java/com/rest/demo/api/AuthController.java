@@ -1,4 +1,4 @@
-package com.rest.demo.config;
+package com.rest.demo.api;
 
 import java.util.Optional;
 

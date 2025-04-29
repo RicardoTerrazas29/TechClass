@@ -65,21 +65,59 @@
 			<scope>test</scope>
 		</dependency>
 		
-		<!-- Spring Security (Para seguridad en tu aplicación) 
+		<!-- =======================
+		     Dependencias para Envío de Correos
+		     ======================= -->
+		     
+		<!-- Librería principal para enviar correos electrónicos usando Jakarta Mail -->
 		<dependency>
-	        <groupId>org.springframework.boot</groupId>
-	        <artifactId>spring-boot-starter-security</artifactId>
-	    </dependency>
+		    <groupId>com.sun.mail</groupId>
+		    <artifactId>jakarta.mail</artifactId>
+		    <version>2.0.1</version>
+		</dependency>
 		
-		-->
-	    
+		<!-- Starter de Spring Boot para facilitar el envío de correos (automatiza configuración de mail) -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
 		
-		<!-- encriptar contraseñas -->
-		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto -->
+		
+		<!-- =======================
+		     Dependencias para Tokens JWT
+		     ======================= -->
+		<!-- Librería para crear y validar tokens JWT (para recuperación de contraseña) -->
+		<dependency>
+		    <groupId>io.jsonwebtoken</groupId>
+		    <artifactId>jjwt</artifactId>
+		    <version>0.9.1</version>
+		</dependency>
+		
+		<!-- Librería necesaria para trabajar con XML y JSON (soporte para JJWT internamente) -->
+		<dependency>
+		    <groupId>javax.xml.bind</groupId>
+		    <artifactId>jaxb-api</artifactId>
+		    <version>2.3.1</version>
+		</dependency>
+		
+		
+		
+		<!-- =======================
+		     Dependencias para Seguridad
+		     ======================= -->
+		<!-- Librería para encriptar contraseñas (usa BCrypt, recomendado para guardar contraseñas seguras) -->
 		<dependency>
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>spring-security-crypto</artifactId>
 		</dependency>
+
+		
+		<!-- Spring Security (Para seguridad en tu aplicación) 
+		<dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-security</artifactId>
+	    </dependency>-->
 
 	</dependencies>
 
@@ -111,5 +149,6 @@
 			</plugin>
 		</plugins>
 	</build>
+
 
 </project>

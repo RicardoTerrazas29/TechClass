@@ -1,3 +1,6 @@
+--primero creas la tabla con el nombre  TechClass y luego en la parte de Schemas-> public -> Tables le das a QueryTool y pegas este script:
+
+--ScriptBD:
 -- Tabla de administradores
 CREATE TABLE administrador (
     idAdministrador SERIAL PRIMARY KEY, 
@@ -20,10 +23,13 @@ CREATE TABLE estudiante (
     idEstudiante SERIAL PRIMARY KEY,
     name VARCHAR(100),
     dni VARCHAR(8),
+    genero VARCHAR(10) CHECK (genero IN ('masculino', 'femenino')),
     address VARCHAR(100),
     mail VARCHAR(100),
     clave VARCHAR(60)
 );
+
+
 
 -- Tabla de cursos
 CREATE TABLE curso (

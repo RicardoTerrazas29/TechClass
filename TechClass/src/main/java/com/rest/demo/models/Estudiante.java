@@ -13,6 +13,7 @@ public class Estudiante {
 	private int idEstudiante;
 	private String name;
 	private String dni;
+	private String genero;
 	private String address;
 	private String mail;
 	private String clave;
@@ -21,15 +22,21 @@ public class Estudiante {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Estudiante(int idEstudiante, String name, String dni, String address, String mail, String clave) {
+	
+	
+	public Estudiante(int idEstudiante, String name, String dni, String genero, String address, String mail,
+			String clave) {
 		super();
 		this.idEstudiante = idEstudiante;
 		this.name = name;
 		this.dni = dni;
+		this.genero = genero;
 		this.address = address;
 		this.mail = mail;
 		this.clave = clave;
 	}
+
+
 
 	public int getIdEstudiante() {
 		return idEstudiante;
@@ -55,6 +62,14 @@ public class Estudiante {
 		this.dni = dni;
 	}
 
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
+
 	public String getAddress() {
 		return address;
 	}
@@ -78,6 +93,6 @@ public class Estudiante {
 	public void setClave(String clave) {
 		this.clave = clave;
 	}
-	
+
 	
 }
