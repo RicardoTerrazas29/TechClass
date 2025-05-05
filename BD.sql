@@ -117,12 +117,13 @@ VALUES
 ('imagenes-guardar/curso-4.jpeg', 'Ciencia', '22884-presencia', 3),
 ('imagenes-guardar/curso-5.png', 'Computacion', '22881-virtual', 1);
 
-
+--rama ricardo
 
 SELECT * FROM curso;
 SELECT*FROM administrador;
 SELECT*FROM profesor;
 SELECT*FROM estudiante;
+SELECT*FROM contenido;
 
 
 
