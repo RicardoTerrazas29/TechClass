@@ -1,5 +1,6 @@
-package com.rest.demo.api;
+package com.rest.demo.controllers;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import com.rest.demo.repository.ProfesorRepository;
 
 @RestController
 @RequestMapping("/auth")
-public class AuthController {
+public class LoginDAO {
 
     @Autowired
     private AdministradorRepository adminRepo;
@@ -44,21 +45,37 @@ public class AuthController {
             );
         }
 
-        // Profesor
+     // Profesor
         Optional<Profesor> prof = profRepo.findByMail(email);
         if (prof.isPresent() && encoder.matches(password, prof.get().getClave())) {
+            Profesor p = prof.get();
             return ResponseEntity.ok(
-                java.util.Map.of("role", "PROFESOR", "name", prof.get().getName())
+            	    Map.of(
+            	        "role", "PROFESOR",
+            	        "name", p.getName(),
+            	        "phone", String.valueOf(p.getPhone()),
+            	        "mail", p.getMail(),
+            	        "idProfesor", String.valueOf(p.getIdProfesor()) // <-- ESTO VIENE DEL BACKEND
+            	    )
+            	);
+
+        }
+
+
+        // Estudiante
+     // Estudiante
+        Optional<Estudiante> est = estRepo.findByMail(email);
+        if (est.isPresent() && encoder.matches(password, est.get().getClave())) {
+            Estudiante e = est.get();
+            return ResponseEntity.ok(
+                Map.of(
+                    "role", "ESTUDIANTE",
+                    "name", e.getName(),
+                    "idEstudiante", String.valueOf(e.getIdEstudiante()) // Aquí añadimos el idEstudiante
+                )
             );
         }
 
-        // Estudiante
-        Optional<Estudiante> est = estRepo.findByMail(email);
-        if (est.isPresent() && encoder.matches(password, est.get().getClave())) {
-            return ResponseEntity.ok(
-                java.util.Map.of("role", "ESTUDIANTE", "name", est.get().getName())
-            );
-        }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
     }

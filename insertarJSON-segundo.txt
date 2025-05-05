@@ -1,6 +1,11 @@
 administrador
 [
   {
+    "name": "admin",
+    "mail": "admin@gmail.com",
+    "clave": "1234"
+  },
+  {
     "name": "Lucas",
     "mail": "lucas@gmail.com",
     "clave": "1234"
@@ -78,7 +83,7 @@ estudiante:
     "dni": "78965412",
     "genero": "masculino",
     "address": "Av. Tecnológica",
-    "mail": "rodrigo@gmail.com",
+    "mail": "estudiante@gmail.com",
     "clave": "1234"
   },
   {

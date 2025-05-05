@@ -1,12 +1,13 @@
 package com.rest.demo.GenerarToken;
 
-import com.rest.demo.api.MailService;
 import com.rest.demo.models.Administrador;
 import com.rest.demo.models.Estudiante;
 import com.rest.demo.models.Profesor;
 import com.rest.demo.repository.AdministradorRepository;
 import com.rest.demo.repository.EstudianteRepository;
 import com.rest.demo.repository.ProfesorRepository;
+import com.rest.demo.service.MailService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
