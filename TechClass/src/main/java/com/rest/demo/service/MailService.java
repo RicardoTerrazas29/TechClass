@@ -1,4 +1,4 @@
-package com.rest.demo.api;
+package com.rest.demo.service;
 
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
