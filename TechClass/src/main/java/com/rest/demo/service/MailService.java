@@ -10,8 +10,8 @@ import java.util.Properties;
 @Service
 public class MailService {
 
-    private final String remitente = "saroneg6g@gmail.com"; // Correo de aplicacion
-    private final String clave = "lcuy khum bznj fpyv"; // Clave de aplicación
+    private final String remitente = "equipotechclass@gmail.com"; // Correo de aplicacion
+    private final String clave = "sngs ikhb xgnn vbey"; // Clave de aplicación
 
     private final Session sesion;
 
