@@ -41,54 +41,61 @@ public class LoginDAO {
         Optional<Administrador> admin = adminRepo.findByMail(email);
         if (admin.isPresent() && encoder.matches(password, admin.get().getClave())) {
             return ResponseEntity.ok(
-                java.util.Map.of("role", "ADMIN", "name", admin.get().getName())
-            );
+                    java.util.Map.of("role", "ADMIN", "name", admin.get().getName()));
         }
 
-     // Profesor
+        // Profesor
         Optional<Profesor> prof = profRepo.findByMail(email);
         if (prof.isPresent() && encoder.matches(password, prof.get().getClave())) {
             Profesor p = prof.get();
             return ResponseEntity.ok(
-            	    Map.of(
-            	        "role", "PROFESOR",
-            	        "name", p.getName(),
-            	        "phone", String.valueOf(p.getPhone()),
-            	        "mail", p.getMail(),
-            	        "idProfesor", String.valueOf(p.getIdProfesor()) // <-- ESTO VIENE DEL BACKEND
-            	    )
-            	);
+                    Map.of(
+                            "role", "PROFESOR",
+                            "name", p.getName(),
+                            "phone", String.valueOf(p.getPhone()),
+                            "mail", p.getMail(),
+                            "idProfesor", String.valueOf(p.getIdProfesor()) // <-- ESTO VIENE DEL BACKEND
+                    ));
 
         }
 
-
         // Estudiante
-     // Estudiante
+        // Estudiante
         Optional<Estudiante> est = estRepo.findByMail(email);
         if (est.isPresent() && encoder.matches(password, est.get().getClave())) {
             Estudiante e = est.get();
             return ResponseEntity.ok(
-                Map.of(
-                    "role", "ESTUDIANTE",
-                    "name", e.getName(),
-                    "idEstudiante", String.valueOf(e.getIdEstudiante()) // Aquí añadimos el idEstudiante
-                )
-            );
+                    Map.of(
+                            "role", "ESTUDIANTE",
+                            "name", e.getName(),
+                            "genero", e.getGenero(),
+                            "idEstudiante", String.valueOf(e.getIdEstudiante()) // Aquí añadimos el idEstudiante
+                    ));
         }
-
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
     }
-
 
     // Clase auxiliar para recibir JSON
     public static class LoginRequest {
         private String email;
         private String password;
+
         // Getters y setters
-        public String getEmail() { return email; }
-        public void setEmail(String email) { this.email = email; }
-        public String getPassword() { return password; }
-        public void setPassword(String password) { this.password = password; }
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
     }
 }
