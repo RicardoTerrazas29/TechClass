@@ -43,8 +43,8 @@ CREATE TABLE contenido (
     idCurso INT,
     titulo VARCHAR(255),
     descripcion TEXT,
-    tipoContenido VARCHAR(50), -- Ejemplo: video, PDF, texto
-    urlContenido VARCHAR(255) -- URL del contenido, si es aplicable
+    tipoContenido TEXT, -- Ejemplo: video, PDF, texto
+    urlContenido TEXT -- URL del contenido, si es aplicable
 );
 
 -- Crear la tabla de asignaciones de cursos (relaciona estudiantes con cursos)
@@ -117,12 +117,16 @@ VALUES
 ('imagenes-guardar/curso-4.jpeg', 'Ciencia', '22884-presencia', 3),
 ('imagenes-guardar/curso-5.png', 'Computacion', '22881-virtual', 1);
 
-
+INSERT INTO contenido (idCurso, titulo, descripcion, tipoContenido, urlContenido) 
+VALUES 
+(1, 'Fracciones', 'Explicación sobre fracciones', 'texto', 'https://www.youtube.com/watch?v=s0Od1b1VEpk'),
+(2, 'Video: Suma de fracciones', 'Video explicativo', 'video', 'https://www.youtube.com/watch?v=s0Od1b1VEpk'),
+(3, 'Infografía de fracciones', 'Imagen con ejemplos', 'imagen', 'https://cde.3.elcomercio.pe/ima/0/1/0/1/4/1014859.jpg'),
+(3, 'PDF de ejercicios', 'Descarga el material', 'pdf', 'https://repositorioacademico.upc.edu.pe/bitstream/handle/10757/668190/Aparicio_GC.pdf?sequence=20');
 
 SELECT * FROM curso;
 SELECT*FROM administrador;
 SELECT*FROM profesor;
 SELECT*FROM estudiante;
-
-
+SELECT * FROM contenido;
 

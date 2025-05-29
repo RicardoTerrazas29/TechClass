@@ -27,7 +27,6 @@ public class CursoDAO {
     @Autowired
     private ProfesorRepository profesorRepository;
 
-    // Crear Curso
     @PostMapping
     public ResponseEntity<Curso> createCurso(@RequestParam String nombre, 
                                              @RequestParam String descripcion, 
@@ -67,7 +66,6 @@ public class CursoDAO {
 
 
 
-    // Actualizar Curso
     @PutMapping("/{id}")
     public Curso actualizarCurso(@PathVariable Integer id, 
                                  @RequestParam("nombre") String nombre,
@@ -95,7 +93,6 @@ public class CursoDAO {
     }
 
 
-    // Eliminar Curso
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCurso(@PathVariable Integer id) {
         Optional<Curso> existingCurso = cursoRepository.findById(id);

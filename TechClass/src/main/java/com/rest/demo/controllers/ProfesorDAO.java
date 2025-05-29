@@ -29,13 +29,11 @@ public class ProfesorDAO {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	// Listar(GET)
 	@GetMapping
 	public List<Profesor> getProfesor() {
 		return repo.findAll();
 	}
 
-	// Listar administrador por ID (GET)
 	@GetMapping("/{idProfesor}")
 	public ResponseEntity<Profesor> getProductoById(@PathVariable Integer idProfesor) {
 		Optional<Profesor> optionalProfesor = repo.findById(idProfesor);
@@ -46,7 +44,6 @@ public class ProfesorDAO {
 		}
 	}
 
-	// Crear (POST)
 	@PostMapping
 	public ResponseEntity<String> save(@RequestBody List<Profesor> profesores) {
 	    try {
@@ -64,7 +61,6 @@ public class ProfesorDAO {
 	}
 
 
-	// Actualizar administrador por ID (PUT)
 	@PutMapping("/{idProfesor}")
 	public ResponseEntity<String> update(@PathVariable Integer idProfesor, @RequestBody Profesor profesor) {
 		Optional<Profesor> existingprofesor = repo.findById(idProfesor);
@@ -81,7 +77,6 @@ public class ProfesorDAO {
 		}
 	}
 
-	// Eliminar (DELETE)
 	@DeleteMapping("/{idProfesor}")
 	public ResponseEntity<String> delete(@PathVariable Integer idProfesor) {
 		Optional<Profesor> profesor = repo.findById(idProfesor);
