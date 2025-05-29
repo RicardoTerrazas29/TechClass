@@ -124,9 +124,29 @@ VALUES
 (3, 'Infografía de fracciones', 'Imagen con ejemplos', 'imagen', 'https://cde.3.elcomercio.pe/ima/0/1/0/1/4/1014859.jpg'),
 (3, 'PDF de ejercicios', 'Descarga el material', 'pdf', 'https://repositorioacademico.upc.edu.pe/bitstream/handle/10757/668190/Aparicio_GC.pdf?sequence=20');
 
+INSERT INTO asignacion_curso (idCurso, idEstudiante) 
+VALUES 
+(1, 1), (3, 1),
+(2, 2), (4, 2);
+
 SELECT * FROM curso;
 SELECT*FROM administrador;
 SELECT*FROM profesor;
 SELECT*FROM estudiante;
 SELECT * FROM contenido;
+SELECT * FROM asignacion_curso;
+
+SELECT e.name AS estudiante, c.nombre AS curso
+FROM asignacion_curso ac
+JOIN estudiante e ON ac.idEstudiante = e.idEstudiante
+JOIN curso c ON ac.idCurso = c.idCurso;
+
+SELECT COUNT(*) AS total_cursos
+FROM asignacion_curso
+WHERE idEstudiante = 2;
+
+SELECT c.idCurso, c.nombre
+FROM asignacion_curso ac
+JOIN curso c ON ac.idCurso = c.idCurso
+WHERE ac.idEstudiante = 2;
 
