@@ -54,6 +54,25 @@ CREATE TABLE asignacion_curso (
     idEstudiante INT
 );
 
+CREATE TABLE foro_publicacion (
+    idPublicacion SERIAL PRIMARY KEY,
+    idEstudiante INT, -- autor del post
+    titulo VARCHAR(255),
+    contenido TEXT,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (idEstudiante) REFERENCES estudiante(idEstudiante)
+);
+
+CREATE TABLE foro_comentario (
+    idComentario SERIAL PRIMARY KEY,
+    idPublicacion INT,
+    idEstudiante INT, -- autor del comentario
+    comentario TEXT,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (idPublicacion) REFERENCES foro_publicacion(idPublicacion),
+    FOREIGN KEY (idEstudiante) REFERENCES estudiante(idEstudiante)
+);
+
 -- --- Añadir las claves foráneas a las tablas usando ALTER TABLE
 
 -- Agregar la clave foránea en la tabla "curso" para vincularla con "profesor"
@@ -129,6 +148,12 @@ VALUES
 (1, 1), (3, 1),
 (2, 2), (4, 2);
 
+INSERT INTO foro_publicacion (idEstudiante, titulo, contenido)
+VALUES (1, '¿Cómo resolver ecuaciones cuadráticas?', 'Estoy confundido con la fórmula general, ¿alguien puede ayudar?');
+
+INSERT INTO foro_comentario (idPublicacion, idEstudiante, comentario)
+VALUES (1, 2, 'Claro, puedo explicarte con un ejemplo paso a paso.');
+
 SELECT * FROM curso;
 SELECT*FROM administrador;
 SELECT*FROM profesor;
@@ -150,3 +175,18 @@ FROM asignacion_curso ac
 JOIN curso c ON ac.idCurso = c.idCurso
 WHERE ac.idEstudiante = 2;
 
+--
+
+SELECT f.idPublicacion, f.titulo, f.contenido, f.fecha, e.name AS autor
+FROM foro_publicacion f
+JOIN estudiante e ON f.idEstudiante = e.idEstudiante
+ORDER BY f.fecha DESC;
+
+SELECT c.idComentario, c.comentario, c.fecha, e.name AS autor
+FROM foro_comentario c
+JOIN estudiante e ON c.idEstudiante = e.idEstudiante
+WHERE c.idPublicacion = 1
+ORDER BY c.fecha ASC;
+
+SELECT * FROM foro_comentario;
+SELECT * FROM foro_publicacion;
