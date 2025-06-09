@@ -1,5 +1,7 @@
 package com.rest.demo.dto;
 
+import java.util.List;
+
 public class ContenidoDTO {
 
     private Integer idCurso;
@@ -7,6 +9,7 @@ public class ContenidoDTO {
     private String descripcion;
     private String tipoContenido;
     private String urlContenido;
+    public List<RecursoDTO> recursos;
 
     public Integer getIdCurso() {
         return idCurso;
@@ -46,6 +49,14 @@ public class ContenidoDTO {
 
     public void setUrlContenido(String urlContenido) {
         this.urlContenido = urlContenido;
+    }
+
+    public List<RecursoDTO> getRecursos() {
+        return recursos;
+    }
+
+    public void setRecursos(List<RecursoDTO> recursos) {
+        this.recursos = recursos;
     }
 }
 

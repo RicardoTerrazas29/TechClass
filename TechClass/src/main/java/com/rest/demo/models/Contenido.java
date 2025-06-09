@@ -1,5 +1,8 @@
 package com.rest.demo.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -17,6 +20,9 @@ public class Contenido {
     private String descripcion;
     private String tipoContenido;
     private String urlContenido;
+
+    @OneToMany(mappedBy = "contenido",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Recurso> recursos = new ArrayList<>();
 
     public Contenido() {
 		// TODO Auto-generated constructor stub
@@ -81,6 +87,9 @@ public class Contenido {
     public void setUrlContenido(String urlContenido) {
         this.urlContenido = urlContenido;
     }
+
+    public List<Recurso> getRecursos(){return recursos; }
+    public void setRecursos(List<Recurso> recursos){this.recursos=recursos;}
 }
 
 
