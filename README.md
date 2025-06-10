@@ -1,6 +1,6 @@
 # techclass-backend
 
-![Imagen de WhatsApp 2025-06-04 a las 09 07 13_b6a56b98](https://github.com/user-attachments/assets/677cb4d5-7b7d-40c5-8861-aa2b92f82689)
+![Imagen de WhatsApp 2025-06-04 a las 09 07 13_b6a56b98](https://github.com/user-attachments/assets/cf30efcf-90ed-42e9-8fae-d695f4b84c44)
 
 ## Introducción
 
