@@ -79,9 +79,8 @@ public class CursoDAO {
         curso.setDescripcion(descripcion);
 
         if (foto != null && !foto.isEmpty()) {
-            String ruta = "uploads/" + foto.getOriginalFilename();
-            foto.transferTo(new File(ruta));
-            curso.setFoto(ruta);
+            String photoUrl = saveFile(foto);  // Guardar la foto en el servidor
+            curso.setFoto(photoUrl);
         }
 
         Profesor profesor = profesorRepository.findById(idProfesor)

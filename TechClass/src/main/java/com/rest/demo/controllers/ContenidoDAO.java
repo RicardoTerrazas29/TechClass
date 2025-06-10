@@ -1,6 +1,7 @@
 package com.rest.demo.controllers;
 
 import com.rest.demo.dto.ContenidoDTO;
+import com.rest.demo.dto.CursoConContenido;
 import com.rest.demo.dto.RecursoDTO;
 import com.rest.demo.models.Contenido;
 import com.rest.demo.models.Curso;
@@ -43,9 +44,15 @@ public class ContenidoDAO {
     }
     // GET: obtener contenidos por curso
     @GetMapping("/curso/{idCurso}")
-    public ResponseEntity<List<Contenido>> obtenerContenidosPorCurso(@PathVariable Integer idCurso) {
+    public ResponseEntity<?> obtenerContenidosPorCurso(@PathVariable Integer idCurso) {
+        Optional<Curso> cursoOpt = cursoRepository.findById(idCurso);
+        if (!cursoOpt.isPresent()) {
+            return ResponseEntity.badRequest().body("Curso no encontrado con id: " + idCurso);
+        }
+        Curso curso = cursoOpt.get();
         List<Contenido> contenidos = contenidoRepository.findByCursoIdCurso(idCurso);
-        return ResponseEntity.ok(contenidos);
+        CursoConContenido respuesta = new CursoConContenido(curso.getNombre(), contenidos);
+        return ResponseEntity.ok(respuesta);
     }
     // POST: crear nuevo contenido
     @PostMapping
@@ -89,7 +96,8 @@ public class ContenidoDAO {
             return ResponseEntity.notFound().build();
         }
         Contenido contenido = contenidoOpt.get();
-        List<Recurso> recursos = new ArrayList<>();
+        List<Recurso> recursos = contenido.getRecursos();
+        if (recursos == null) recursos = new ArrayList<>();
 
         for (RecursoDTO recursoDTO : recursosDTO) {
             Recurso recurso = new Recurso();
@@ -99,7 +107,7 @@ public class ContenidoDAO {
             recurso.setContenido(contenido);
             recursos.add(recurso);
         }
-        contenido.setRecursos(recursos);
+       
         contenidoRepository.save(contenido);
 
         return ResponseEntity.ok(contenido.getRecursos());
