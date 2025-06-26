@@ -151,6 +151,14 @@ public class LogroController {
         if (estOpt.isEmpty() || logroOpt.isEmpty()) {
             return ResponseEntity.badRequest().body("Estudiante o logro no encontrado");
         }
+        //verifica si ya existe logro para ese estudiante
+        boolean yaAsignado = logroEstudianteRepository
+            .findByEstudianteIdEstudiante(idEstudiante)
+            .stream()
+            .anyMatch(le-> le.getLogro().getIdLogro().equals(idLogro));
+        if (yaAsignado) {
+            return ResponseEntity.status(409).body("El logro ya fue asignado a este estudiante");
+        }
         LogroEstudiante le = new LogroEstudiante();
         le.setEstudiante(estOpt.get());
         le.setLogro(logroOpt.get());
