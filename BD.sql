@@ -154,6 +154,57 @@ VALUES (1, '¿Cómo resolver ecuaciones cuadráticas?', 'Estoy confundido con la
 INSERT INTO foro_comentario (idPublicacion, idEstudiante, comentario)
 VALUES (1, 2, 'Claro, puedo explicarte con un ejemplo paso a paso.');
 
+-- crear tabla de recurso
+CREATE TABLE recurso (
+    idRecurso SERIAL PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    tipoContenido VARCHAR(100),
+    url VARCHAR(500),
+    idContenido INTEGER,
+    CONSTRAINT fk_contenido
+        FOREIGN KEY (idContenido)
+        REFERENCES contenido(idContenido)
+        ON DELETE CASCADE
+);
+
+-- crear tabla de logro
+CREATE TABLE logro (
+    id_logro SERIAL PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    icono VARCHAR(255),
+    idcurso INTEGER NOT NULL,
+    idcontenido INTEGER NOT NULL,
+    CONSTRAINT fk_logro_curso FOREIGN KEY (idcurso) 
+	REFERENCES curso(idcurso) ON DELETE CASCADE,
+    CONSTRAINT fk_logro_contenido FOREIGN KEY (idcontenido) 
+	REFERENCES contenido(idcontenido) ON DELETE CASCADE
+);
+
+-- crear tabla de logro_estudiante
+CREATE TABLE logro_estudiante (
+    id SERIAL PRIMARY KEY,
+    idestudiante INTEGER NOT NULL,
+    idlogro INTEGER NOT NULL,
+    CONSTRAINT fk_logroestudiante_estudiante FOREIGN KEY (idestudiante) 
+	REFERENCES estudiante(idestudiante) ON DELETE CASCADE,
+    CONSTRAINT fk_logroestudiante_logro FOREIGN KEY (idlogro) 
+	REFERENCES logro(idlogro) ON DELETE CASCADE
+);
+
+CREATE TABLE recurso_revisado (
+    id SERIAL PRIMARY KEY,
+    id_estudiante INTEGER NOT NULL REFERENCES estudiante(idestudiante) ON DELETE CASCADE,
+    id_recurso INTEGER NOT NULL REFERENCES recurso(idrecurso) ON DELETE CASCADE,
+    id_contenido INTEGER NOT NULL REFERENCES contenido(idcontenido) ON DELETE CASCADE
+);
+
+CREATE TABLE contenido_completado (
+    id SERIAL PRIMARY KEY,
+    id_estudiante INTEGER NOT NULL REFERENCES estudiante(idestudiante) ON DELETE CASCADE,
+    id_contenido INTEGER NOT NULL REFERENCES contenido(idcontenido) ON DELETE CASCADE
+);
+
+-- Consultas de prueba
 SELECT * FROM curso;
 SELECT*FROM administrador;
 SELECT*FROM profesor;
