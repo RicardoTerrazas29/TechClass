@@ -1,13 +1,22 @@
 package com.rest.demo.controllers;
 
+import com.rest.demo.dto.ContenidoCompletadoDTO;
 import com.rest.demo.dto.ContenidoDTO;
 import com.rest.demo.dto.CursoConContenido;
 import com.rest.demo.dto.RecursoDTO;
+import com.rest.demo.dto.RecursoRevisadoDTO;
 import com.rest.demo.models.Contenido;
+import com.rest.demo.models.ContenidoCompletado;
 import com.rest.demo.models.Curso;
+import com.rest.demo.models.Estudiante;
 import com.rest.demo.models.Recurso;
+import com.rest.demo.models.RecursoRevisado;
+import com.rest.demo.repository.ContenidoCompletadoRepository;
 import com.rest.demo.repository.ContenidoRepository;
 import com.rest.demo.repository.CursoRepository;
+import com.rest.demo.repository.EstudianteRepository;
+import com.rest.demo.repository.RecursoRepository;
+import com.rest.demo.repository.RecursoRevisadoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +34,18 @@ public class ContenidoDAO {
     @Autowired
     private ContenidoRepository contenidoRepository;
 
+    @Autowired
+    private EstudianteRepository estudianteRepository;
+
+    @Autowired
+    private RecursoRepository recursoRepository;
+
+    @Autowired
+    private RecursoRevisadoRepository recursoRevisadoRepository;
+
+    @Autowired
+    private ContenidoCompletadoRepository contenidoCompletadoRepository;
+    
     @Autowired
     private CursoRepository cursoRepository;
 
@@ -202,6 +223,114 @@ public class ContenidoDAO {
 
         contenidoRepository.deleteById(id);
         return ResponseEntity.ok().body("Contenido eliminado con id: " + id);
+    }
+
+    //marcar recurso como revisado
+    @PostMapping("/recursos/{idEstudiante}/revisado")
+    public ResponseEntity<?> marcarRecursoComoRevisado(
+            @PathVariable Integer idEstudiante,
+            @RequestBody RecursoRevisadoDTO dto) {
+
+        Optional<Estudiante> estudianteOpt = estudianteRepository.findById(idEstudiante);
+        Optional<Recurso> recursoOpt = recursoRepository.findById(dto.idRecurso);
+        Optional<Contenido> contenidoOpt = contenidoRepository.findById(dto.idContenido);
+
+        if (estudianteOpt.isEmpty() || recursoOpt.isEmpty() || contenidoOpt.isEmpty()) {
+            return ResponseEntity.badRequest().body("Datos inválidos");
+        }
+
+        // Evitar duplicados
+        if (recursoRevisadoRepository.existsByEstudianteIdEstudianteAndRecursoIdRecurso(idEstudiante, dto.idRecurso)) {
+            return ResponseEntity.status(409).body("Ya fue marcado como revisado");
+        }
+
+        RecursoRevisado revisado = new RecursoRevisado();
+        revisado.setEstudiante(estudianteOpt.get());
+        revisado.setRecurso(recursoOpt.get());
+        revisado.setContenido(contenidoOpt.get());
+
+        recursoRevisadoRepository.save(revisado);
+
+        return ResponseEntity.ok("Recurso marcado como revisado");
+    }
+
+    //marcar contendio como completado
+    @PostMapping("/{idEstudiante}/completado")
+    public ResponseEntity<?> marcarContenidoComoCompletado(
+            @PathVariable Integer idEstudiante,
+            @RequestBody(required = true) ContenidoCompletadoDTO dto) {
+
+        Optional<Estudiante> estudianteOpt = estudianteRepository.findById(idEstudiante);
+        Optional<Contenido> contenidoOpt = contenidoRepository.findById(dto.idContenido);
+
+        if (estudianteOpt.isEmpty() || contenidoOpt.isEmpty()) {
+            return ResponseEntity.badRequest().body("Datos inválidos");
+        }
+
+        // Verifica si ya está marcado como completado
+        if (contenidoCompletadoRepository.existsByEstudianteIdEstudianteAndContenidoIdContenido(idEstudiante, dto.idContenido)) {
+            return ResponseEntity.status(409).body("Ya fue marcado como completado");
+        }
+
+        // Verifica si todos los recursos del contenido están revisados por el estudiante
+        List<Recurso> recursos = recursoRepository.findByContenidoIdContenido(dto.idContenido);
+        boolean todosRevisados = recursos.stream().allMatch(recurso ->
+            recursoRevisadoRepository.existsByEstudianteIdEstudianteAndRecursoIdRecurso(idEstudiante, recurso.getIdRecurso())
+        );
+
+        if (!todosRevisados) {
+            return ResponseEntity.badRequest().body("No todos los recursos han sido revisados");
+        }
+
+        ContenidoCompletado completado = new ContenidoCompletado();
+        completado.setEstudiante(estudianteOpt.get());
+        completado.setContenido(contenidoOpt.get());
+
+        contenidoCompletadoRepository.save(completado);
+
+        return ResponseEntity.ok("Contenido marcado como completado");
+    }
+    
+    //traer el progreso del estudiante en un curso
+    @GetMapping("/estudiantes/{idEstudiante}/progreso/curso/{idCurso}")
+    public ResponseEntity<?> obtenerProgresoEstudianteEnCurso(
+            @PathVariable Integer idEstudiante,
+            @PathVariable Integer idCurso) {
+
+        // Obtener todos los contenidos del curso
+        List<Contenido> contenidos = contenidoRepository.findByCursoIdCurso(idCurso);
+
+        // Para cada contenido, obtener recursos revisados y si está completado
+        List<Integer> idsContenidos = new ArrayList<>();
+        List<Integer> idsCompletados = new ArrayList<>();
+        java.util.Map<Integer, List<Integer>> recursosRevisadosPorContenido = new java.util.HashMap<>();
+
+        for (Contenido contenido : contenidos) {
+            idsContenidos.add(contenido.getIdContenido());
+
+            // Recursos revisados
+            List<RecursoRevisado> revisados = recursoRevisadoRepository
+                    .findByEstudianteIdEstudianteAndContenidoIdContenido(idEstudiante, contenido.getIdContenido());
+            List<Integer> idsRevisados = revisados.stream()
+                    .map(r -> r.getRecurso().getIdRecurso())
+                    .toList();
+            recursosRevisadosPorContenido.put(contenido.getIdContenido(), idsRevisados);
+
+            // Contenido completado
+            boolean completado = contenidoCompletadoRepository
+                    .existsByEstudianteIdEstudianteAndContenidoIdContenido(idEstudiante, contenido.getIdContenido());
+            if (completado) {
+                idsCompletados.add(contenido.getIdContenido());
+            }
+        }
+
+        return ResponseEntity.ok(
+            java.util.Map.of(
+                "contenidos", idsContenidos,
+                "revisados", recursosRevisadosPorContenido,
+                "completados", idsCompletados
+            )
+        );
     }
 }
 
