@@ -112,12 +112,45 @@
 		    <artifactId>spring-security-crypto</artifactId>
 		</dependency>
 
-		
-		<!-- Spring Security (Para seguridad en tu aplicación) 
+		<!-- =======================
+		     Librerias jasper
+		     ======================= -->
+		<!-- JasperReports -->
 		<dependency>
-	        <groupId>org.springframework.boot</groupId>
-	        <artifactId>spring-boot-starter-security</artifactId>
-	    </dependency>-->
+		    <groupId>net.sf.jasperreports</groupId>
+		    <artifactId>jasperreports</artifactId>
+		    <version>7.0.3</version>
+		</dependency>
+		<!-- Librería principal para crear y exportar reportes -->
+		<dependency>
+		    <groupId>net.sf.jasperreports</groupId>
+		    <artifactId>jasperreports</artifactId>
+		    <version>7.0.3</version> <!-- tu versión actual -->
+		</dependency>
+		<!-- Funciones extras para usar en reportes (ej: fechas, TopN, etc.) -->
+		<dependency>
+		    <groupId>net.sf.jasperreports</groupId>
+		    <artifactId>jasperreports-functions</artifactId>
+		    <version>7.0.3</version>
+		</dependency>
+		<!-- Información estructural de los reportes (campos, parámetros, etc.) -->
+		<dependency>
+		    <groupId>net.sf.jasperreports</groupId>
+		    <artifactId>jasperreports-metadata</artifactId>
+		    <version>7.0.3</version>
+		</dependency>
+		<!-- Soporte para reportes que se pueden pausar y continuar -->
+		<dependency>
+		    <groupId>net.sf.jasperreports</groupId>
+		    <artifactId>jasperreports-javaflow</artifactId>
+		    <version>7.0.3</version>
+		</dependency>
+		<!-- Necesario para exportar reportes a PDF -->
+		<dependency>
+		    <groupId>net.sf.jasperreports</groupId>
+		    <artifactId>jasperreports-pdf</artifactId>
+		    <version>7.0.3</version>
+		</dependency>
 
 	</dependencies>
 

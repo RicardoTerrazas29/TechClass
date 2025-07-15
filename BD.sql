@@ -1,5 +1,3 @@
---crear bd TechClass
-
 -- Crear la tabla de administradores
 CREATE TABLE administrador (
     idAdministrador SERIAL PRIMARY KEY, 
@@ -164,8 +162,9 @@ CREATE TABLE recurso (
     CONSTRAINT fk_contenido
         FOREIGN KEY (idContenido)
         REFERENCES contenido(idContenido)
-        ON DELETE CASCADE
+        ON DELETE CASCADE
 );
+
 
 -- crear tabla de logro
 CREATE TABLE logro (
@@ -186,10 +185,11 @@ CREATE TABLE logro_estudiante (
     idestudiante INTEGER NOT NULL,
     idlogro INTEGER NOT NULL,
     CONSTRAINT fk_logroestudiante_estudiante FOREIGN KEY (idestudiante) 
-	REFERENCES estudiante(idestudiante) ON DELETE CASCADE,
+        REFERENCES estudiante(idestudiante) ON DELETE CASCADE,
     CONSTRAINT fk_logroestudiante_logro FOREIGN KEY (idlogro) 
-	REFERENCES logro(idlogro) ON DELETE CASCADE
+        REFERENCES logro(id_logro) ON DELETE CASCADE
 );
+
 
 CREATE TABLE recurso_revisado (
     id SERIAL PRIMARY KEY,
@@ -241,3 +241,6 @@ ORDER BY c.fecha ASC;
 
 SELECT * FROM foro_comentario;
 SELECT * FROM foro_publicacion;
+
+SELECT * FROM administrador
+ORDER BY idAdministrador asc;
