@@ -43,7 +43,7 @@ public class ReportesAdministradores {
             // 6. Retornar como archivo descargable
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_PDF)
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=ReporteAdministradores.pdf")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=ReporteAdministradores.pdf") //inline para no pregunte donde guardar
                     .body(pdf);
 
         } catch (Exception e) {

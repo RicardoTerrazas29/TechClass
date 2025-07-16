@@ -45,7 +45,7 @@ public class ReporteEstudiantes {
             // 6. Retornar PDF como archivo descargable
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_PDF)
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=reporte_estudiantes.pdf")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=ReporteEstudiante.pdf") //inline para no pregunte donde guardar
                     .body(pdf);
 
         } catch (Exception e) {
